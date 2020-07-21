@@ -6,41 +6,45 @@ import logoImg from '../../assets/logo.svg';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-
-import { Background, Container, Content } from './styles'
+import { Background, Container, Content } from './styles';
 
 const SingUp: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  function handleSubmit(data: object): void {
+    console.log(data);
+  }
 
-    function handleSubmit(data: object): void{
-        console.log(data);
-    }
+  return (
+    <Container>
+      <Background />
 
-    return (
-        <Container>
-            <Background/>
+      <Content>
+        <img src={logoImg} alt="GoBarber" />
 
-            <Content>
-            <img src={logoImg} alt="GoBarber"/>
+        <Form onSubmit={handleSubmit}>
+          <h1>Faça seu Cadastro</h1>
 
-            <Form onSubmit={handleSubmit}>
-                <h1>Faça seu Cadastro</h1>
+          <Input name="name" icon={FiUser} placeholder="Nome" />
 
-                <Input name="name" icon={FiUser} placeholder="Nome"/>
+          <Input name="email" icon={FiMail} placeholder="E-mail" />
 
-                <Input name="email" icon={FiMail} placeholder="E-mail"/>
+          <Input
+            name="password"
+            icon={FiLock}
+            type="password"
+            placeholder="Senha"
+          />
 
-                <Input  name="password" icon={FiLock} type="password" placeholder="Senha"/>
+          <Button type="submit">Cadastrar</Button>
+        </Form>
 
-                <Button type="submit">Cadastrar</Button>
-            </Form>
-
-            <a href="login">
-                <FiArrowLeft/>
-                Voltar para Logon
-            </a>
-        </Content>
-        </Container>
-    );
+        <a href="login">
+          <FiArrowLeft />
+          Voltar para Logon
+        </a>
+      </Content>
+    </Container>
+  );
 };
 
 export default SingUp;
