@@ -24,10 +24,7 @@ const SingUp: React.FC = () => {
         email: Yup.string()
           .required('email obrigatório')
           .email('digite um email válido'),
-        password: Yup.string().min(
-          6,
-          'a senha deve ter no minimo 6 caracteres',
-        ),
+        password: Yup.string().min(6, 'minimo 6 digitos '),
       });
 
       await schema.validate(data, {
