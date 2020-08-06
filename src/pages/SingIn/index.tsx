@@ -51,7 +51,11 @@ const SingIp: React.FC = () => {
         formRef.current?.setErrors(errors);
       }
 
-      addToast();
+      addToast({
+        type: 'error',
+        title: 'Errona comunicação',
+        description: 'ocorreu um erro na comunicação',
+      });
     },
     [signIn, addToast],
   );
