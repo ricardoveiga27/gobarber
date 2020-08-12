@@ -2,7 +2,7 @@ import React, { useRef, useCallback } from 'react';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import { useAuth } from '../../hooks/auth';
@@ -26,6 +26,8 @@ const SingIp: React.FC = () => {
   const { signIn } = useAuth();
   const { addToast } = useToast();
 
+  const history = useHistory();
+
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
       try {
@@ -46,19 +48,24 @@ const SingIp: React.FC = () => {
           email: data.email,
           password: data.password,
         });
+        history.push('/dashboard');
       } catch (err) {
-        const errors = getValidationErrors(err);
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
 
-        formRef.current?.setErrors(errors);
+          formRef.current?.setErrors(errors);
+
+          return;
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro na comunicação',
+          description: 'ocorreu um erro na comunicação',
+        });
       }
-
-      addToast({
-        type: 'error',
-        title: 'Errona comunicação',
-        description: 'ocorreu um erro na comunicação',
-      });
     },
-    [signIn, addToast],
+    [signIn, addToast, history],
   );
 
   return (
